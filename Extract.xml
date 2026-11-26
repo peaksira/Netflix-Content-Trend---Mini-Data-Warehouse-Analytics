@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="12.1.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="12.1.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="retrieve" compatibility="12.1.001" expanded="true" height="68" name="Retrieve netflix_titles (3)" width="90" x="514" y="85">
+        <parameter key="repository_entry" value="netflix_titles"/>
+      </operator>
+      <operator activated="true" class="model_simulator:data_statistics" compatibility="11.1.003" expanded="true" height="82" name="Statistics (2)" width="90" x="782" y="85"/>
+      <operator activated="true" class="retrieve" compatibility="12.1.001" expanded="true" height="68" name="Retrieve netflix_titles (2)" width="90" x="112" y="595">
+        <parameter key="repository_entry" value="netflix_titles"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="12.1.001" expanded="true" height="68" name="Retrieve netflix_with_scores" width="90" x="715" y="646">
+        <parameter key="repository_entry" value="netflix_with_scores"/>
+      </operator>
+      <operator activated="true" class="blending:generate_columns" compatibility="12.1.001" expanded="true" height="82" name="create title_cleaned (3)" width="90" x="849" y="646">
+        <list key="function_descriptions">
+          <parameter key="title_clean" value="lower(trim(replaceAll([title], &quot;[^a-zA-Z0-9\\s]&quot;, &quot;&quot;)))"/>
+        </list>
+        <parameter key="keep_all_columns" value="true"/>
+        <parameter key="default_time_zone" value="Asia/Bangkok"/>
+      </operator>
+      <operator activated="true" class="remove_duplicates" compatibility="12.1.001" expanded="true" height="103" name="Remove Duplicates titlecleaned (3)" width="90" x="983" y="646">
+        <parameter key="attribute_filter_type" value="subset"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value="title_clean"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="treat_missing_values_as_duplicates" value="false"/>
+      </operator>
+      <operator activated="false" class="filter_examples" compatibility="12.1.001" expanded="true" height="103" name="Filter Examples (2)" width="90" x="1385" y="595">
+        <parameter key="parameter_expression" value=""/>
+        <parameter key="condition_class" value="custom_filters"/>
+        <parameter key="invert_filter" value="false"/>
+        <list key="filters_list">
+          <parameter key="filters_entry_key" value="tmdb_score.is_not_missing."/>
+        </list>
+        <parameter key="filters_logic_and" value="true"/>
+        <parameter key="filters_check_metadata" value="true"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="12.1.001" expanded="true" height="68" name="Retrieve title.basics (2)" width="90" x="112" y="493">
+        <parameter key="repository_entry" value="title.basics"/>
+      </operator>
+      <operator activated="true" class="blending:generate_columns" compatibility="12.1.001" expanded="true" height="82" name="create title_cleaned" width="90" x="313" y="493">
+        <list key="function_descriptions">
+          <parameter key="title_clean" value="lower(trim(replaceAll([primaryTitle], &quot;[^a-zA-Z0-9\\s]&quot;, &quot;&quot;)))"/>
+        </list>
+        <parameter key="keep_all_columns" value="true"/>
+        <parameter key="default_time_zone" value="Asia/Bangkok"/>
+      </operator>
+      <operator activated="true" class="remove_duplicates" compatibility="12.1.001" expanded="true" height="103" name="Remove Duplicates titlecleaned" width="90" x="447" y="493">
+        <parameter key="attribute_filter_type" value="subset"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value="title_clean"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="treat_missing_values_as_duplicates" value="false"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="12.1.001" expanded="true" height="68" name="Retrieve netflix_titles_cleaned (1) (1)" width="90" x="112" y="681">
+        <parameter key="repository_entry" value="netflix_titles_cleaned (1) (1)"/>
+      </operator>
+      <operator activated="true" class="concurrency:join" compatibility="12.1.001" expanded="true" height="82" name="Join (2)" width="90" x="246" y="646">
+        <parameter key="remove_double_attributes" value="true"/>
+        <parameter key="join_type" value="left"/>
+        <parameter key="use_id_attribute_as_key" value="false"/>
+        <list key="key_attributes">
+          <parameter key="show_id" value="ï»¿show_id"/>
+        </list>
+        <parameter key="keep_both_join_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="blending:generate_columns" compatibility="12.1.001" expanded="true" height="82" name="create title_cleaned (2)" width="90" x="380" y="595">
+        <list key="function_descriptions">
+          <parameter key="title_clean" value="lower(trim(replaceAll([title], &quot;[^a-zA-Z0-9\\s]&quot;, &quot;&quot;)))"/>
+        </list>
+        <parameter key="keep_all_columns" value="true"/>
+        <parameter key="default_time_zone" value="Asia/Bangkok"/>
+      </operator>
+      <operator activated="true" class="remove_duplicates" compatibility="12.1.001" expanded="true" height="103" name="Remove Duplicates titlecleaned (2)" width="90" x="514" y="595">
+        <parameter key="attribute_filter_type" value="subset"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value="title_clean"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="treat_missing_values_as_duplicates" value="false"/>
+      </operator>
+      <operator activated="true" class="concurrency:join" compatibility="12.1.001" expanded="true" height="82" name="Join with title_cleaned" width="90" x="715" y="493">
+        <parameter key="remove_double_attributes" value="true"/>
+        <parameter key="join_type" value="left"/>
+        <parameter key="use_id_attribute_as_key" value="false"/>
+        <list key="key_attributes">
+          <parameter key="title_clean" value="title_clean"/>
+        </list>
+        <parameter key="keep_both_join_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="concurrency:join" compatibility="12.1.001" expanded="true" height="82" name="Join (5)" width="90" x="1050" y="544">
+        <parameter key="remove_double_attributes" value="true"/>
+        <parameter key="join_type" value="left"/>
+        <parameter key="use_id_attribute_as_key" value="false"/>
+        <list key="key_attributes">
+          <parameter key="show_id" value="ï»¿show_id"/>
+        </list>
+        <parameter key="keep_both_join_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="write_csv" compatibility="12.1.001" expanded="true" height="82" name="Write CSV" width="90" x="1318" y="493">
+        <parameter key="csv_file" value="C:/Users/User/Documents/Data mining/project/dataset.csv"/>
+        <parameter key="column_separator" value=";"/>
+        <parameter key="write_attribute_names" value="true"/>
+        <parameter key="quote_nominal_values" value="true"/>
+        <parameter key="format_date_attributes" value="true"/>
+        <parameter key="date_format" value="yyyy-MM-dd HH:mm:ss"/>
+        <parameter key="append_to_file" value="false"/>
+        <parameter key="encoding" value="SYSTEM"/>
+      </operator>
+      <connect from_op="Retrieve netflix_titles (3)" from_port="output" to_op="Statistics (2)" to_port="example set"/>
+      <connect from_op="Statistics (2)" from_port="statistics" to_port="result 1"/>
+      <connect from_op="Statistics (2)" from_port="example set" to_port="result 2"/>
+      <connect from_op="Retrieve netflix_titles (2)" from_port="output" to_op="Join (2)" to_port="left"/>
+      <connect from_op="Retrieve netflix_with_scores" from_port="output" to_op="create title_cleaned (3)" to_port="table input"/>
+      <connect from_op="create title_cleaned (3)" from_port="table output" to_op="Remove Duplicates titlecleaned (3)" to_port="example set input"/>
+      <connect from_op="Remove Duplicates titlecleaned (3)" from_port="example set output" to_op="Join (5)" to_port="right"/>
+      <connect from_op="Retrieve title.basics (2)" from_port="output" to_op="create title_cleaned" to_port="table input"/>
+      <connect from_op="create title_cleaned" from_port="table output" to_op="Remove Duplicates titlecleaned" to_port="example set input"/>
+      <connect from_op="Remove Duplicates titlecleaned" from_port="example set output" to_op="Join with title_cleaned" to_port="right"/>
+      <connect from_op="Retrieve netflix_titles_cleaned (1) (1)" from_port="output" to_op="Join (2)" to_port="right"/>
+      <connect from_op="Join (2)" from_port="join" to_op="create title_cleaned (2)" to_port="table input"/>
+      <connect from_op="create title_cleaned (2)" from_port="table output" to_op="Remove Duplicates titlecleaned (2)" to_port="example set input"/>
+      <connect from_op="Remove Duplicates titlecleaned (2)" from_port="example set output" to_op="Join with title_cleaned" to_port="left"/>
+      <connect from_op="Join with title_cleaned" from_port="join" to_op="Join (5)" to_port="left"/>
+      <connect from_op="Join (5)" from_port="join" to_op="Write CSV" to_port="input"/>
+      <connect from_op="Write CSV" from_port="through" to_port="result 3"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+    </process>
+  </operator>
+</process>
