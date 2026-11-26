@@ -26,10 +26,10 @@ The project uses dimensional modeling with fact and dimension tables to support 
 
 - Python
 - Pandas
+- RapidMiner
 - REST API
 - ETL
 - Data Warehousing
-- Jupyter Notebook
 
 ## Project Structure
 
