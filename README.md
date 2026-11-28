@@ -50,9 +50,6 @@ Analyzed 8,743 titles using Python to answer five business questions:
 - Animation and Documentary have the highest average scores among the 10 analyzed genres.
 - Movie runtime has a weak positive correlation with TMDB scores.
 
-## Power BI Dashboard
-
-[View Interactive Dashboard](https://o365ku-my.sharepoint.com/:u:/r/personal/sirawit_non_live_ku_th/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fsirawit%5Fnon%5Flive%5Fku%5Fth%2FDocuments%2FDashBoard%5Fnetflix%5Ffinal%2Epbix&parent=%2Fpersonal%2Fsirawit%5Fnon%5Flive%5Fku%5Fth%2FDocuments&share=cQq6ML2K1%2DABSa8%2DSfYu4%2DaCEgUDVK7QhmtG4C0Dk7xHEAu7ow)
 
 ## Tools & Technologies
 
@@ -61,6 +58,7 @@ Analyzed 8,743 titles using Python to answer five business questions:
 - Matplotlib
 - Seaborn
 - RapidMiner
+- Power BI
 - REST API
 - ETL
 - Data Warehousing
@@ -79,6 +77,9 @@ data_warehouse/
 - dimension/
 - bridge/
 
+dashboard/
+└── DashBoard_netflix.pdf
+└── DashBoard_netflix.pbix
 API.ipynb
 Netflix_Analytics.ipynb
 README.md
